@@ -5,19 +5,21 @@
 	let testvalue = ""
 	import { appDir } from '@tauri-apps/api/path';
 	import { createDir, BaseDirectory } from '@tauri-apps/api/fs';
+	import { readDir } from '@tauri-apps/api/fs';
 	import { fetch } from '@tauri-apps/api/http';
 	async function downloadGame()
 	{
-		let response = await fetch('http://www.google.de/', {
-  method: 'GET',
-  timeout: 30,
-});
-	testvalue = response.status.toString();
+		await createDir('game',{dir: BaseDirectory.App,recursive: true});
+		const entries = await readDir('game', new Uint8Array([]), { dir: BaseDirectory.App, recursive: true });
+
 	}
+
+
+
 </script>
 
 <main>
-<div>{testvalue}
+	<div>
 	<progress value={progress} max="100"></progress>
 	<button on:click={downloadGame}>{statusButton}</button></div>
 </main>
