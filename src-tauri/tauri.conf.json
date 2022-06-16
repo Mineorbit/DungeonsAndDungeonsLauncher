@@ -14,12 +14,26 @@
     "allowlist": {
       "fs": {
         "all": true,
-        "scope": ["$APP/*","$APP/game/","$APP/game/*","$APP"]
+        "scope": ["$APP/*","$APP/game/","$APP/game/*","$APP/download/","$APP/download/*","$APP/download/Win64.zip","game/*","$APP/game/Win64.zip","$APP"]
       },
       "http": {
         "all": true, 
         "request": true,
-        "scope": ["http://46.232.248.108/"]
+        "scope": ["http://46.232.248.108/*"]
+      },
+      "shell":{
+        "all": false,
+        "execute": true,
+        "open": false,
+        "scope": [{
+          "name": "unzip",
+          "cmd": "unzip",
+          "args": ["*","-d", "*"] 
+        }],
+        "sidecar": false
+      },
+      "path":{
+        "all": true
       }
     },
     "bundle": {
