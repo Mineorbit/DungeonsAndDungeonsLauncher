@@ -10,8 +10,10 @@
 	async function downloadGame()
 	{
 		await createDir('game',{dir: BaseDirectory.App,recursive: true});
-		const entries = await readDir('game', new Uint8Array([]), { dir: BaseDirectory.App, recursive: true });
-
+		const response = await fetch('http://46.232.248.108/', {
+  method: 'GET',
+  timeout: 30,
+});
 	}
 
 
