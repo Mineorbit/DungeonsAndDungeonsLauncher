@@ -22,15 +22,23 @@
         "scope": ["http://46.232.248.108/*"]
       },
       "shell":{
-        "all": false,
-        "execute": true,
-        "open": false,
+        "all": true, // enable all shell APIs
+        "execute": true, // enable process spawn APIs
+        "sidecar": true, // enable spawning sidecars
+        "open": true,
         "scope": [{
           "name": "unzip",
-          "cmd": "unzip",
+          "cmd": "unzip.exe",
           "args": ["*","-d", "*"] 
-        }],
-        "sidecar": false
+        },{
+          "name": "cmd",
+          "cmd": "cmd.exe",
+          "args": ["*"]
+        },{
+          "name": "powershell",
+          "cmd": "powershell.exe",
+          "args": ["*"]
+        }]
       },
       "path":{
         "all": true
@@ -79,8 +87,8 @@
       {
         "fullscreen": false,
         "height": 600,
-        "resizable": true,
-        "decorations": false,
+        "resizable": false,
+        "decorations": true,
         "title": "Dungeons And Dungeons Launcher",
         "width": 800
       }
