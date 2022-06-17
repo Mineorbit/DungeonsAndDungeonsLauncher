@@ -21,6 +21,9 @@
         "request": true,
         "scope": ["http://46.232.248.108/*"]
       },
+      "os": {
+        "all": true, // enable all Os APIs
+      },
       "shell":{
         "all": true, // enable all shell APIs
         "execute": true, // enable process spawn APIs

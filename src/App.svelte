@@ -11,27 +11,45 @@
 			// With the Tauri API npm package:
 import { invoke } from '@tauri-apps/api/tauri'
 // With the Tauri global script, enabled when `tauri.conf.json > build > withGlobalTauri` is set to true:
+import { platform } from '@tauri-apps/api/os';
 
+	async function VersionToUse()
+	{
+		const platformName = await platform();
+		console.log(platformName);
+		switch(platformName){
+			case "win32":
+				return "Win64.zip"
+			case "linux":
+				return "Linux64.zip"
+		}
+	}
 
 	async function downloadGame()
 	{
 		await createDir('game',{dir: BaseDirectory.App,recursive: true});
 		await createDir('download',{dir: BaseDirectory.App,recursive: true});
 		console.log("Downloading Game");
-		var response = await fetch('http://46.232.248.108/Win64.zip', {
+		var vers = await VersionToUse();
+		var downloadURL = 'http://46.232.248.108/'+vers;
+		console.log(downloadURL);
+		var response = await fetch(downloadURL, {
   			method: 'GET',
   			timeout: 300,
   			responseType: ResponseType.Binary});
-		await writeBinaryFile('download/Win64.zip',response.data,{dir: BaseDirectory.App});
+		console.log("Download done");
+		await writeBinaryFile('download/'+vers,response.data,{dir: BaseDirectory.App});
 		await decompressGame();
 		
 	}
 
 	async function decompressGame()
 	{
+		console.log("Decompressing File");
 		var appDirPath = await appDir()
 		
-		var downloadpath = await resolve(appDirPath, 'download', 'Win64.zip');
+		const vers = await VersionToUse();
+		var downloadpath = await resolve(appDirPath, 'download', vers);
 		var runpath = await resolve(appDirPath, 'game');
 		console.log(downloadpath)
 		console.log(runpath)
@@ -47,9 +65,19 @@ import { invoke } from '@tauri-apps/api/tauri'
 	async function runGame()
 	{
 		var appDirPath = await appDir()
-		var runPath = await resolve(appDirPath, 'game', 'DungeonsAndDungeons.exe');
+
+		const platformName = await platform();
+		console.log(platformName);
+		switch(platformName){
+			case "win32":
+				var runPath = await resolve(appDirPath, 'game', 'DungeonsAndDungeons.exe');
+				invoke('execCommand', { invokeMessage: "powershell", arg: runPath })
+
+			case "linux":
+				var runPath = await resolve(appDirPath, 'game', 'DungeonsAndDungeons');
+				invoke('execCommand', { invokeMessage: "sh", arg: runPath })
+		}
 		
-		invoke('execCommand', { invokeMessage: "powershell", arg: runPath })
 	}
 
 
