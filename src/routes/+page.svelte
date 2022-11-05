@@ -1,7 +1,14 @@
 <script>
+  import { createDir, BaseDirectory } from '@tauri-apps/api/fs';
   import Greet from "$lib/Greet.svelte";
+    import { start_hydrating } from 'svelte/internal';
   var godotdownload = "https://downloads.tuxfamily.org/godotengine/4.0/beta4/Godot_v4.0-beta4_win64.exe.zip";
-
+  
+  async function open()
+  {
+    console.log("Started installing Game")
+    await createDir('gameSource', { dir: BaseDirectory.App, recursive: true });
+  }
 </script>
 
 <h1>Dungeons And Dungeons</h1>
@@ -11,7 +18,7 @@
 
   <div>
     <div class="row">
-      <button> Start </button>
+      <button on:click={open}> Start </button>
     </div>
     <p></p>
   </div>
