@@ -1,51 +1,18 @@
 {
-  "$schema": "..\\node_modules/@tauri-apps/cli\\schema.json",
   "build": {
-    "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:8080",
-    "distDir": "../public"
+    "beforeBuildCommand": "npm run build",
+    "devPath": "http://localhost:1420",
+    "distDir": "../build",
+    "withGlobalTauri": false
   },
   "package": {
     "productName": "DungeonsAndDungeonsLauncher",
-    "version": "0.1.0"
+    "version": "0.0.0"
   },
   "tauri": {
     "allowlist": {
-      "fs": {
-        "all": true,
-        "scope": ["$APP/*","$APP/game/","$APP/game/*","$APP/download/","$APP/download/*","$APP/download/Win64.zip","game/*","$APP/game/Win64.zip","$APP"]
-      },
-      "http": {
-        "all": true, 
-        "request": true,
-        "scope": ["http://46.232.248.108/*"]
-      },
-      "os": {
-        "all": true, // enable all Os APIs
-      },
-      "shell":{
-        "all": true, // enable all shell APIs
-        "execute": true, // enable process spawn APIs
-        "sidecar": true, // enable spawning sidecars
-        "open": true,
-        "scope": [{
-          "name": "unzip",
-          "cmd": "unzip.exe",
-          "args": ["*","-d", "*"] 
-        },{
-          "name": "cmd",
-          "cmd": "cmd.exe",
-          "args": ["*"]
-        },{
-          "name": "powershell",
-          "cmd": "powershell.exe",
-          "args": ["*"]
-        }]
-      },
-      "path":{
-        "all": true
-      }
+      "all": true
     },
     "bundle": {
       "active": true,
@@ -62,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.mineorbit.launcher",
+      "identifier": "com.tauri.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -90,9 +57,8 @@
       {
         "fullscreen": false,
         "height": 600,
-        "resizable": false,
-        "decorations": true,
-        "title": "Dungeons And Dungeons Launcher",
+        "resizable": true,
+        "title": "DungeonsAndDungeonsLauncher",
         "width": 800
       }
     ]
