@@ -10,6 +10,7 @@ use std::cell::RefCell;
 use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 
+use std::process::Command;
 
 fn download_godot()
 {
@@ -18,7 +19,14 @@ fn download_godot()
 
 #[tauri::command]
 fn build_game() {
-    download_godot();
+            println!("Starting Engine");
+            let output = 
+                Command::new("godot\\godot.exe")
+                .args(["--path", "repo"])
+                .output()
+                .expect("failed to execute process");
+            
+            let hello = output.stdout;
 }
 
 
@@ -142,8 +150,7 @@ fn run(args: &Args) -> Result<(), git2::Error> {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![build_game])
-        .invoke_handler(tauri::generate_handler![update_repo])
+        .invoke_handler(tauri::generate_handler![update_repo,build_game])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
