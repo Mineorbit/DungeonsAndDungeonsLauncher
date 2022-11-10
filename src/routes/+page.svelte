@@ -1,5 +1,17 @@
 <script>
   import Greet from "$lib/Greet.svelte";
+  
+  import { invoke } from '@tauri-apps/api/tauri'
+   
+  import { createDir, BaseDirectory } from '@tauri-apps/api/fs';
+  
+  async function open()
+  {
+    
+    console.log("Started installing Game")
+    //var path
+    invoke('update_repo', { path:"path" });
+  }
 </script>
 
 <h1>Welcome to Tauri!</h1>
@@ -19,7 +31,7 @@
 <p>Click on the Tauri, Vite, and Svelte logos to learn more.</p>
 
 <div class="row">
-  <Greet />
+  <button on:click={open}>Test</button>
 </div>
 
 <style>
