@@ -1,35 +1,25 @@
 <script>
-  import { createDir, BaseDirectory } from '@tauri-apps/api/fs';
-  import { invoke } from '@tauri-apps/api/tauri'
   import Greet from "$lib/Greet.svelte";
-  import { start_hydrating } from 'svelte/internal';
-
-  import { appDataDir } from '@tauri-apps/api/path';
-  var godotdownload = "https://downloads.tuxfamily.org/godotengine/4.0/beta4/Godot_v4.0-beta4_win64.exe.zip";
-  
-  async function open()
-  {
-    console.log("Started installing Game")
-    await createDir('gameSource', { dir: BaseDirectory.App, recursive: true });
-    var localDataDirPath = await appDataDir();
-    //var path
-    console.log(localDataDirPath);
-   // await invoke('update_repo', { path:"path" });
-  }
 </script>
 
-<h1>Dungeons And Dungeons</h1>
-
+<h1>Welcome to Tauri!</h1>
 
 <div class="row">
+  <a href="https://vitejs.dev" target="_blank">
+    <img src="/vite.svg" class="logo vite" alt="Vite Logo" />
+  </a>
+  <a href="https://tauri.app" target="_blank">
+    <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
+  </a>
+  <a href="https://kit.svelte.dev" target="_blank">
+    <img src="/svelte.svg" class="logo svelte" alt="Svelte Logo" />
+  </a>
+</div>
 
-  <div>
-    <div class="row">
-      <button on:click={open}> Start </button>
-    </div>
-    <p></p>
-  </div>
-  
+<p>Click on the Tauri, Vite, and Svelte logos to learn more.</p>
+
+<div class="row">
+  <Greet />
 </div>
 
 <style>
