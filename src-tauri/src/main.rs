@@ -16,15 +16,18 @@ use std::path::{Path, PathBuf};
 #[tauri::command]
 fn update_repo(path: &str) {
     print!("Fetching Repo to {}",path);
-    println!("Repo fetched!");
-
+    let mut fetch = false;
     let args = Args{
         arg_path: String::from("path"),
         arg_url: String::from("https://github.com/Mineorbit/DungeonsAndDungeons")
     };
     match run(&args) {
         Ok(()) => {}
-        Err(e) => println!("error: {}", e),
+        Err(e) => {println!("error: {}", e); fetch = true},
+    }
+    if fetch
+    {
+        println!("Repo fetched!");
     }
 }
 
