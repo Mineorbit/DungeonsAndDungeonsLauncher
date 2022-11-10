@@ -11,6 +11,15 @@ use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 
 
+fn download_godot()
+{
+
+}
+
+#[tauri::command]
+fn build_game() {
+    download_godot();
+}
 
 
 #[tauri::command]
@@ -18,7 +27,7 @@ fn update_repo(path: &str) {
     print!("Fetching Repo to {}",path);
     let mut fetch = false;
     let args = Args{
-        arg_path: String::from("path"),
+        arg_path: String::from("repo"),
         arg_url: String::from("https://github.com/Mineorbit/DungeonsAndDungeons")
     };
     match run(&args) {
@@ -29,6 +38,9 @@ fn update_repo(path: &str) {
     {
         println!("Repo fetched!");
     }
+
+    println!("Ready to build!");
+
 }
 
 
@@ -130,6 +142,7 @@ fn run(args: &Args) -> Result<(), git2::Error> {
 
 fn main() {
     tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![build_game])
         .invoke_handler(tauri::generate_handler![update_repo])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

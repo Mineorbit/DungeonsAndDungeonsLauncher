@@ -10,7 +10,7 @@
     
     console.log("Started installing Game")
     //var path
-    invoke('update_repo', { path:"path" });
+    invoke('update_repo', { path:"repo" });
   }
 </script>
 
