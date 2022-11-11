@@ -16,17 +16,22 @@ fn download_godot()
 {
 
 }
+use std::ascii::escape_default;
+use std::str;
 
 #[tauri::command]
 fn build_game() {
+    // we require export templates to be installed
             println!("Starting Engine");
-            let output = 
-                Command::new("godot\\godot.exe")
-                .args(["--path", "repo"])
-                .output()
-                .expect("failed to execute process");
             
-            let hello = output.stdout;
+            let output2  = 
+            Command::new("cmd")
+            .args(["echo test"])
+            //.args([" \"godot\\godot.exe\"  --path  repo  --export  WindowsDesktop  ../game/game.exe"])
+            .spawn()
+            .expect("failed to execute process");
+        
+let hello = output2.stdout;
 }
 
 
