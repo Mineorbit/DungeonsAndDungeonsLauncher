@@ -19,6 +19,29 @@ fn download_godot()
 use std::ascii::escape_default;
 use std::str;
 
+
+#[tauri::command]
+fn launch_game_from_source() {
+        // we require export templates to be installed
+        println!("Starting Game from Source");
+            
+        let output2  = 
+        Command::new("godot\\godot.exe")
+        .args(["--path","repo", "--client"])
+        .output()
+        .expect("failed to execute process");
+    
+let hello = output2.stdout;
+let result = String::from_utf8(hello);
+let mut resultstr = String::from("No result");
+match result {
+Ok(v) => {resultstr = v;}
+Err(e) => println!("Could not parse return")
+}
+println!("{:#?}",resultstr.lines());
+}
+
+
 #[tauri::command]
 fn build_game() {
     // we require export templates to be installed
@@ -183,7 +206,7 @@ fn run(args: &Args) -> Result<(), git2::Error> {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![update_repo,build_game,launch_game])
+        .invoke_handler(tauri::generate_handler![update_repo,build_game,launch_game,launch_game_from_source])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

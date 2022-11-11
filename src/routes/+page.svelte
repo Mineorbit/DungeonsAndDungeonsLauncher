@@ -15,7 +15,8 @@
   }
   async function start()
   {
-    invoke('launch_game');
+  invoke('launch_game');
+   //invoke('launch_game_from_source');
   }
 </script>
 
