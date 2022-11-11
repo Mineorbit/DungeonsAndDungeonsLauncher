@@ -13,6 +13,10 @@
     await invoke('update_repo', { path:"repo" });
     invoke('build_game');
   }
+  async function start()
+  {
+    invoke('launch_game');
+  }
 </script>
 
 <h1>Welcome to Tauri!</h1>
@@ -32,7 +36,8 @@
 <p>Click on the Tauri, Vite, and Svelte logos to learn more.</p>
 
 <div class="row">
-  <button on:click={open}>Test</button>
+  <button on:click={open}>Update</button>
+  <button on:click={start}>Start</button>
 </div>
 
 <style>
