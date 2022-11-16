@@ -1,22 +1,23 @@
 <script>
   import Greet from "$lib/Greet.svelte";
-  
+
   import { invoke } from '@tauri-apps/api/tauri'
-   
+
   import { createDir, BaseDirectory } from '@tauri-apps/api/fs';
-  
-  async function open()
-  {
-    
-    console.log("Started installing Game")
-    //var path
+
+  async function update() {
+    const path = (await import('@tauri-apps/api/path'));
+    const appDataDir = await path.appDataDir();
+
+
+    console.log(appDataDir);
     await invoke('update_repo', { path:"repo" });
-    invoke('build_game');
+    // invoke('build_game');
   }
-  async function start()
-  {
+
+  async function start() {
   //invoke('launch_game');
-   invoke('launch_game_from_source');
+   // invoke('launch_game_from_source');
   }
 </script>
 
@@ -26,7 +27,7 @@
 
 
 <div class="row">
-  <button on:click={open}>Update</button>
+  <button on:click={update}>Update</button>
   <button on:click={start}>Start</button>
 </div>
 

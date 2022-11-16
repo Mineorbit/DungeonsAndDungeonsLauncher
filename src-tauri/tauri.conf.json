@@ -45,7 +45,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "de.mineorbit.dungeonsanddungeons.launcher",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
