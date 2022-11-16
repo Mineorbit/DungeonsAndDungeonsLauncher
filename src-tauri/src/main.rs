@@ -3,7 +3,6 @@
     windows_subsystem = "windows"
 )]
 
-
 use git2::build::{CheckoutBuilder, RepoBuilder};
 use git2::{FetchOptions, Progress, RemoteCallbacks};
 use std::cell::RefCell;
@@ -12,94 +11,91 @@ use std::path::{Path, PathBuf};
 
 use std::process::Command;
 
-fn download_godot()
-{
-
-}
+fn download_godot() {}
 use std::ascii::escape_default;
 use std::str;
 
-
 #[tauri::command]
 fn launch_game_from_source() {
-        // we require export templates to be installed
-        println!("Starting Game from Source Code");
-            
-        let output2  = 
-        Command::new("godot\\godot.exe")
-        .args(["--path","repo","--client"])
+    // we require export templates to be installed
+    println!("Starting Game from Source Code");
+
+    let output2 = Command::new("godot\\godot.exe")
+        .args(["--path", "repo", "--client"])
         .spawn()
         .expect("failed to execute process");
-
 }
-
 
 #[tauri::command]
 fn build_game() {
     // we require export templates to be installed
-            println!("Starting Engine");
-            
-            let output2  = 
-            Command::new("godot\\godot.exe")
-            .args(["--path","repo", "--export",  "WindowsDesktop",  "../game/DungeonsAndDungeons.pck"])
-            .output()
-            .expect("failed to execute process");
-        
-let hello = output2.stdout;
-let result = String::from_utf8(hello);
-let mut resultstr = String::from("No result");
-match result {
-    Ok(v) => {resultstr = v;}
-    Err(e) => println!("Could not parse return")
-}
-println!("{:#?}",resultstr.lines());
-}
+    println!("Starting Engine");
 
+    let output2 = Command::new("godot\\godot.exe")
+        .args([
+            "--path",
+            "repo",
+            "--export",
+            "WindowsDesktop",
+            "../game/DungeonsAndDungeons.pck",
+        ])
+        .output()
+        .expect("failed to execute process");
 
+    let hello = output2.stdout;
+    let result = String::from_utf8(hello);
+    let mut resultstr = String::from("No result");
+    match result {
+        Ok(v) => {
+            resultstr = v;
+        }
+        Err(e) => println!("Could not parse return"),
+    }
+    println!("{:#?}", resultstr.lines());
+}
 
 #[tauri::command]
 fn launch_game() {
-        // we require export templates to be installed
-        println!("Starting Game");
-            
-        let output2  = 
-        Command::new("game\\DungeonsAndDungeons.exe")
+    // we require export templates to be installed
+    println!("Starting Game");
+
+    let output2 = Command::new("game\\DungeonsAndDungeons.exe")
         .output()
         .expect("failed to execute process");
-    
-let hello = output2.stdout;
-let result = String::from_utf8(hello);
-let mut resultstr = String::from("No result");
-match result {
-Ok(v) => {resultstr = v;}
-Err(e) => println!("Could not parse return")
-}
-println!("{:#?}",resultstr.lines());
-}
 
+    let hello = output2.stdout;
+    let result = String::from_utf8(hello);
+    let mut resultstr = String::from("No result");
+    match result {
+        Ok(v) => {
+            resultstr = v;
+        }
+        Err(e) => println!("Could not parse return"),
+    }
+    println!("{:#?}", resultstr.lines());
+}
 
 #[tauri::command]
 fn update_repo(path: &str) {
-    print!("Fetching Repo to {}",path);
+    print!("Fetching Repo to {}", path);
     let mut fetch = false;
-    let args = Args{
+    let args = Args {
         arg_path: String::from("repo"),
-        arg_url: String::from("https://github.com/Mineorbit/DungeonsAndDungeons")
+        arg_url: String::from("https://github.com/Mineorbit/DungeonsAndDungeons"),
     };
     match run(&args) {
         Ok(()) => {}
-        Err(e) => {println!("error: {}", e); fetch = true},
+        Err(e) => {
+            println!("error: {}", e);
+            fetch = true
+        }
     }
-    if fetch
-    {
+    if fetch {
         println!("Repo fetched!");
     }
 
     println!("Ready to build!");
-
 }
-
-
 
 struct Args {
     arg_url: String,
@@ -194,11 +190,14 @@ fn run(args: &Args) -> Result<(), git2::Error> {
     Ok(())
 }
 
-
-
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![update_repo,build_game,launch_game,launch_game_from_source])
+        .invoke_handler(tauri::generate_handler![
+            update_repo,
+            build_game,
+            launch_game,
+            launch_game_from_source
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
